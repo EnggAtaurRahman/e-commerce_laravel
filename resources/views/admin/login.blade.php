@@ -31,17 +31,34 @@
               </div>
               <h4>Hello! let's get started</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
+
               @if(Session::has('error_message'))
-              <div class="alert alert-danger" role="alert">
-                <strong>Error: </strong>{{Session::get('error_message')}}
-              </div>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error: </strong>{{Session::get('error_message')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+              @endif
+
+              @if ($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
               @endif
               <form class="pt-3" method="POST" action="{{ url('admin/login') }}"> @csrf
                 <div class="form-group">
-                  <input type="email" id="email" name="email"  class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required="">
+                  <input type="email" id="email" name="email" required=""  class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" >
                 </div> 
                 <div class="form-group">
-                  <input type="password" id="password" name="password" required="" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                  <input type="password" id="password" name="password" required=""  class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
                 </div>
                 <div class="mt-3">
                   <button type='submit' class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >SIGN IN</button>
